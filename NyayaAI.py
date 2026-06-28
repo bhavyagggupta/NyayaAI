@@ -6,14 +6,14 @@ from langchain_core.messages import HumanMessage
 # CONFIGURATION
 # ==================================================
 
-GOOGLE_API_KEY = st.secrets["GEMINI_API_KEY"]
+GOOGLE_API_KEY = "AQ.Ab8RN6IO_zcZTxSJyi_kinUqcPNDSfJX29DKPMEuQ84gcw3Vcg"
 
 
 st.markdown(
     """
     <style>
     .stApp {
-        background-color: #cd5c5c;
+        background-color:#faf0e6;
 
     }
     </style>
@@ -43,16 +43,16 @@ llm = ChatGoogleGenerativeAI(
 
 
 st.markdown("""
-<h1 style='color:#ffc0cb;
+<h1 style='color:#2F4F4F;
            font-family:Garamond;
            text-align:center;
            font-size: 60px'>
-    NyayaAI ݁₊ ⚖️ .📜 ݁˖ 
+    NyayaAI ݁⚖️📜 ݁ 
 </h1>
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<h1 style='color:#fffaf0;
+<h1 style='color:#1B1B1B;
            font-family:Garamond;
            text-align:center;
            font-size: 23px'>
@@ -64,19 +64,7 @@ st.markdown("""
 # FEATURE SELECTION
 # ==================================================
 
-st.markdown("""
-<h1 style='color:#fffaf0;
-           font-family:Garamond;
-           text-align:center;
-           font-size: 17px'>
-  Welcome to NyayaAI! 
-  This is a tool that will help you overcome any challenge- be it related to basic digity or complex provisional rights.
-There are different modes that will help you with different problems. All you need to do is just share whatever you feel like has been done to harm your fundamental rights, dignity or respect, and NyayaAI will suggest the best solution! 
 
-Give it a try!
-
-</h1>
-""", unsafe_allow_html=True)
 
 @st.dialog("About Rights Explainer")
 def rights_info():
@@ -139,6 +127,147 @@ def simplifier_info():
 
     </div>
     """, unsafe_allow_html=True)
+
+st.info(
+    """
+
+📍 Report a Crime:     File an FIR or incident report.
+
+
+
+
+📚 Know Your Rights:       Simple legal information in your language.
+
+
+
+🚨 Emergency Help:      Police • Ambulance • Women's Helpline.
+
+
+
+👾 Ask NyayaAI :      Get instant legal guidance."""
+)
+
+import streamlit as st
+
+st.set_page_config(page_title="NyayaAI", layout="wide")
+
+st.title("🧑‍⚖️ NyayaAI")
+st.subheader("How can we help you today?")
+
+# ------------------------------
+# Know Your Rights
+# ------------------------------
+with st.expander("📚 Know Your Rights"):
+    st.write("Ask any question about your legal rights.")
+
+
+    rights_query = st.text_area(
+        "Type your question",
+        placeholder="e.g. Can police refuse to register my FIR?"
+    )
+
+    rights_files = st.file_uploader(
+        "Upload supporting documents",
+        accept_multiple_files=True,
+        type=["pdf","docx","jpg","jpeg","png"]
+    )
+
+    rights_audio = st.file_uploader(
+        "Upload voice memo",
+        type=["mp3","wav","m4a"]
+    )
+
+    if st.button("Submit Question", key="rights"):
+        st.success("Your question has been submitted.")
+
+# ------------------------------
+# Write a Report
+# ------------------------------
+with st.expander("📝 Write a Report"):
+    report = st.text_area(
+        "Describe what happened",
+        height=180,
+        placeholder="Write your report here..."
+    )
+
+    photos = st.file_uploader(
+        "Upload Photos",
+        type=["jpg","jpeg","png"],
+        accept_multiple_files=True,
+        key="photos"
+    )
+
+    documents = st.file_uploader(
+        "Upload Documents",
+        type=["pdf","doc","docx"],
+        accept_multiple_files=True,
+        key="documents"
+    )
+
+    audio = st.file_uploader(
+        "Upload Voice Memo",
+        type=["mp3","wav","m4a"],
+        key="audio"
+    )
+
+    if st.button("Submit Report", key="report"):
+        st.success("Report saved successfully.")
+
+# ------------------------------
+# Understand Legal Documents
+# ------------------------------
+with st.expander("📄 Understand Legal Documents"):
+    legal_doc = st.file_uploader(
+        "Upload your legal document",
+        type=["pdf","doc","docx"],
+        key="legal"
+    )
+
+    question = st.text_area(
+        "Ask a question about the document",
+        placeholder="Explain this notice in simple language."
+    )
+
+    if st.button("Analyze Document", key="analyse"):
+        st.success("Document ready for analysis.")
+
+# ------------------------------
+# Emergency Contacts
+# ------------------------------
+with st.expander("🚨 Emergency Contacts"):
+
+    st.markdown("""
+    ### One-tap Emergency Numbers
+
+    🚓 Police: **100**
+
+    🚑 Ambulance: **108**
+
+    🚒 Fire: **101**
+
+    👩 Women's Helpline: **181**
+
+    👶 Child Helpline: **1098**
+    """)
+
+    emergency_notes = st.text_area(
+        "Describe your emergency (optional)"
+    )
+
+    emergency_photo = st.file_uploader(
+        "Upload photo",
+        type=["jpg","jpeg","png"],
+        key="emergencyphoto"
+    )
+
+    emergency_audio = st.file_uploader(
+        "Upload voice recording",
+        type=["mp3","wav","m4a"],
+        key="emergencyaudio"
+    )
+
+    if st.button("Send Emergency Report", key="emergency"):
+        st.success("Emergency report prepared.")
 
 feature = st.radio(
     
@@ -244,7 +373,7 @@ if st.button("Analyze"):
             st.success("Analysis Complete")
             st.markdown(
     f"""
-    <div style='color:#fffaf0;
+    <div style='color:#964B00;
                 font-family:Garamond;
                 text-align:center;
                 font-size:17px;'>
