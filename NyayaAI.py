@@ -6,7 +6,7 @@ from langchain_core.messages import HumanMessage
 # CONFIGURATION
 # ==================================================
 
-GOOGLE_API_KEY = "AQ.Ab8RN6IO_zcZTxSJyi_kinUqcPNDSfJX29DKPMEuQ84gcw3Vcg"
+GOOGLE_API_KEY = "AQ.Ab8RN6LQWMkM7RGBYnRHcWUXWsisPbWnRRcWFdHEtvsWcq7P8w"
 
 
 st.markdown(
@@ -154,6 +154,123 @@ st.set_page_config(page_title="NyayaAI", layout="wide")
 st.title("🧑‍⚖️ NyayaAI")
 st.subheader("How can we help you today?")
 
+def generate_prompt(feature, user_input):
+
+    if feature == "Rights Explainer":
+        return f"""
+        Explain the Indian constitutional and legal rights relevant to the following issue.
+
+        Issue:
+        {user_input}
+
+        Requirements:
+        - Use simple language
+        - Mention relevant Constitutional Articles
+        - Mention important laws if applicable
+        - Explain possible remedies
+        """
+
+    elif feature == "Complaint Draft":
+        return f"""
+        Draft a formal complaint letter based on the issue below.
+
+        Issue:
+        {user_input}
+
+        Requirements:
+        - Professional format
+        - Respectful tone
+        - Clear description of grievance
+        - Requested action
+        """
+
+    elif feature == "Legal Simplifier":
+        return f"""
+        Simplify the following legal rights explanation into plain, easy-to-understand language.
+
+        Legal Explanation:
+        {user_input}
+
+        Requirements:
+        - Explain like you are speaking to a student or ordinary citizen
+        - Avoid legal jargon and complex terminology
+        - Simplify references to Constitutional Articles and laws
+        - Clearly explain:
+          * What rights are involved
+         * What the law says
+         * What actions the person can take
+        - Use short sentences
+        - Use bullet points where helpful
+        - Keep the explanation practical and easy to understand
+        """
+
+    elif feature == "Rights Explainer":
+        return f"""
+        Explain the Indian constitutional and legal rights relevant to the following issue.
+
+        Issue:
+        {user_input}
+
+        Requirements:
+        - Use simple language
+        - Mention relevant Constitutional Articles
+        - Mention important laws if applicable
+        - Explain possible remedies
+        """
+
+    elif feature == "Complaint Draft":
+        return f"""
+        Draft a formal complaint letter based on the issue below.
+
+        Issue:
+        {user_input}
+
+        Requirements:
+        - Professional format
+        - Respectful tone
+        - Clear description of grievance
+        - Requested action
+        """
+
+    elif feature == "Bhavya":
+        return f"""
+        Simplify the following legal rights explanation into plain, easy-to-understand language.
+
+        Legal Explanation:
+        {user_input}
+
+        Requirements:
+        - Explain like you are speaking to a student or ordinary citizen
+        - Avoid legal jargon and complex terminology
+        - Simplify references to Constitutional Articles and laws
+        - Clearly explain:
+          * What rights are involved
+         * What the law says
+         * What actions the person can take
+        - Use short sentences
+        - Use bullet points where helpful
+        - Keep the explanation practical and easy to understand
+        """
+def generate_prompt(feature, user_input):
+
+    if feature == "Rights Explainer":
+        ...
+
+    elif feature == "Complaint Draft":
+        ...
+
+    elif feature == "Legal Simplifier":
+        ...
+
+    return user_input
+feature = st.radio(
+    "Choose a Feature",
+    [
+        
+    ]
+    )
+
+
 # ------------------------------
 # Know Your Rights
 # ------------------------------
@@ -178,7 +295,30 @@ with st.expander("📚 Know Your Rights"):
     )
 
     if st.button("Submit Question", key="rights"):
-        st.success("Your question has been submitted.")
+        prompt = generate_prompt("📚 Know Your Rights", rights_query)
+
+        try:
+            with st.spinner("Analyzing..."):
+
+                response = llm.invoke([
+                    HumanMessage(content=prompt)
+                ])
+                st.markdown(
+    f"""
+    <div style='color:#964B00;
+                font-family:Garamond;
+                text-align:center;
+                font-size:17px;'>
+    {response.content}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+           ## st.success("Analysis Complete")
+            ##st.success("Your question has been submitted.")
 
 # ------------------------------
 # Write a Report
