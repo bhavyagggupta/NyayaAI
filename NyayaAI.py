@@ -6,8 +6,7 @@ from langchain_core.messages import HumanMessage
 # CONFIGURATION
 # ==================================================
 
-GOOGLE_API_KEY = "AQ.Ab8RN6Ihu8u-uiBoXCOu15FEbJh6BDVm2kpLvqPdJ0nxHVWQ-g"
-
+GOOGLE_API_KEY = "AQ.Ab8RN6L1vQaJpA4C5t4sHB01SAxEwegG17eQa5Z0zjvZibptTQ"
 
 st.markdown(
     """
@@ -33,7 +32,7 @@ st.set_page_config(
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
-    google_api_key=GOOGLE_API_KEY,
+    google_api_key= GOOGLE_API_KEY,
     temperature=0.3
 )
 
@@ -253,17 +252,60 @@ def generate_prompt(feature, user_input):
         """
 def generate_prompt(feature, user_input):
 
-    if feature == "Rights Explainer":
-        ...
+    if feature == "📚 Know Your Rights":
+       return f"""
+        Explain the Indian constitutional and legal rights relevant to the following issue.
 
-    elif feature == "Complaint Draft":
-        ...
+        Issue:
+        {user_input}
 
-    elif feature == "Legal Simplifier":
-        ...
+        Requirements:
+        - Use simple language
+        - Mention relevant Constitutional Articles
+        - Mention important laws if applicable
+        - Explain possible remedies
+        - In case of invalid input, say "Invalid Input"
+        """ 
 
-    return user_input
-feature = st.radio(
+    elif feature == "📝 Write a Report":
+      return f"""
+        Draft a formal complaint letter based on the issue below.
+
+        Issue:
+        {user_input}
+
+        Requirements:
+        - Professional format
+        - Respectful tone
+        - Clear description of grievance
+        - Requested action
+        """
+
+    elif feature == "📄 Understand Legal Documents":
+       return f"""
+        Simplify the following legal rights explanation into plain, easy-to-understand language.
+
+        Legal Explanation:
+        {user_input}
+
+        Requirements:
+        - Explain like you are speaking to a student or ordinary citizen
+        - Avoid legal jargon and complex terminology
+        - Simplify references to Constitutional Articles and laws
+        - Clearly explain:
+          * What rights are involved
+         * What the law says
+         * What actions the person can take
+        - Use short sentences
+        - Use bullet points where helpful
+        - Keep the explanation practical and easy to understand
+        """
+    elif feature == "🚨 Emergency Contacts":
+       
+       return {user_input}
+    
+
+    feature = st.radio(
     "Choose a Feature",
     [
         
@@ -303,7 +345,7 @@ with st.expander("📚 Know Your Rights"):
                 response = llm.invoke([
                     HumanMessage(content=prompt)
                 ])
-                st.markdown(
+            st.markdown(
     f"""
     <div style='color:#964B00;
                 font-family:Garamond;
@@ -349,9 +391,29 @@ with st.expander("📝 Write a Report"):
         type=["mp3","wav","m4a"],
         key="audio"
     )
+    if st.button("Submit Question", key="report"):
+        prompt = generate_prompt("📝 Write a Report", report)
+        try:
+            with st.spinner("Analyzing..."):
 
-    if st.button("Submit Report", key="report"):
-        st.success("Report saved successfully.")
+                response = llm.invoke([
+                    HumanMessage(content=prompt)
+                ])
+                st.markdown(
+    f"""
+    <div style='color:#964B00;
+                font-family:Garamond;
+                text-align:center;
+                font-size:17px;'>
+    {response.content}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+        except Exception as e:
+            st.error(f"Error: {e}")
+    #if st.button("Submit Report", key="report"):
+        #st.success("Report saved successfully.")
 
 # ------------------------------
 # Understand Legal Documents
@@ -367,9 +429,28 @@ with st.expander("📄 Understand Legal Documents"):
         "Ask a question about the document",
         placeholder="Explain this notice in simple language."
     )
+    if st.button("Submit Question", key="legal language"):
+        prompt = generate_prompt("📄 Understand Legal Documents", legal_doc)
+        try:
+            with st.spinner("Analyzing..."):
 
-    if st.button("Analyze Document", key="analyse"):
-        st.success("Document ready for analysis.")
+                response = llm.invoke([
+                    HumanMessage(content=prompt)
+                ])
+                st.markdown(
+    f"""
+    <div style='color:#964B00;
+                font-family:Garamond;
+                text-align:center;
+                font-size:17px;'>
+    {response.content}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+        except Exception as e:
+            st.error(f"Error: {e}")
+    
 
 # ------------------------------
 # Emergency Contacts
@@ -394,20 +475,29 @@ with st.expander("🚨 Emergency Contacts"):
         "Describe your emergency (optional)"
     )
 
-    emergency_photo = st.file_uploader(
-        "Upload photo",
-        type=["jpg","jpeg","png"],
-        key="emergencyphoto"
-    )
 
-    emergency_audio = st.file_uploader(
-        "Upload voice recording",
-        type=["mp3","wav","m4a"],
-        key="emergencyaudio"
-    )
 
-    if st.button("Send Emergency Report", key="emergency"):
-        st.success("Emergency report prepared.")
+    if st.button("Submit Question", key="emergency"):
+        prompt = generate_prompt("🚨Emergency Contacts", emergency_notes)
+        try:
+            with st.spinner("Analyzing..."):
+
+                response = llm.invoke([
+                    HumanMessage(content=prompt)
+                ])
+                st.markdown(
+    f"""
+    <div style='color:#964B00;
+                font-family:Garamond;
+                text-align:center;
+                font-size:17px;'>
+    {response.content}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+        except Exception as e:
+            st.error(f"Error: {e}")
 
 feature = st.radio(
     
@@ -416,6 +506,7 @@ feature = st.radio(
         "Rights Explainer",
         "Complaint Draft",
         "Legal Simplifier"
+
     ]
     )
 
