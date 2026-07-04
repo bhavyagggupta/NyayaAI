@@ -6,7 +6,7 @@ from langchain_core.messages import HumanMessage
 # CONFIGURATION
 # ==================================================
 
-GOOGLE_API_KEY = "AQ.Ab8RN6LQWMkM7RGBYnRHcWUXWsisPbWnRRcWFdHEtvsWcq7P8w"
+GOOGLE_API_KEY = "AQ.Ab8RN6Ihu8u-uiBoXCOu15FEbJh6BDVm2kpLvqPdJ0nxHVWQ-g"
 
 
 st.markdown(
